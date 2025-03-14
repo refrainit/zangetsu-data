@@ -1,0 +1,2 @@
+# zangetsu-data
+PostgreSQL、BigQuery、Googleスプレッドシートへアクセスし、データを取得することをサポートするライブラリ
