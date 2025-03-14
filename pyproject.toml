@@ -1,0 +1,70 @@
+[project]
+name = "zangetsu-data"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "dotenv>=0.9.9",
+    "google-api-python-client>=2.164.0",
+    "google-auth>=2.38.0",
+    "google-cloud-bigquery>=3.29.0",
+    "google-cloud-bigquery-storage>=2.28.0",
+    "jinja2>=3.1.5",
+    "openpyxl>=3.1.5",
+    "pandas>=2.2.3",
+    "psycopg2-binary>=2.9.10",
+    "pyarrow>=19.0.1",
+    "requests>=2.32.3",
+    "sqlalchemy>=2.0.38",
+    "sqlalchemy-bigquery>=1.12.1",
+    "zangetsu-logger>=0.1.1",
+]
+
+[dependency-groups]
+dev = [
+    "alembic>=1.15.1",
+    "sqlacodegen==3.0.0rc5",
+    "psutil>=7.0.0",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.9.7",
+]
+
+# sqlファイルをパッケージに含める
+[tool.setuptools.package-data]
+"zangetsu_data" = ["sql/*.sql"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+# テスト発見のためのパス設定
+testpaths = ["tests"]
+
+# デフォルトの引数設定
+addopts = [
+    "-v",  # 詳細な出力
+    "--show-capture=no",  # キャプチャされた出力を表示しない
+    "-s",  # 標準出力とエラー出力を表示
+]
+
+# マーカーの定義（オプション）
+markers = [
+    "slow: marks tests as slow",
+    "database: marks database-related tests",
+]
+
+# フィルタリング
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+
+# カバレッジ設定（カバレッジツールを使用する場合）
+# requires pytest-cov
+# addopts = "--cov=. --cov-report=html"
