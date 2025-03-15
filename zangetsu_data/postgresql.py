@@ -20,28 +20,38 @@ class Postgresql(Database):
     また、特定の業務に特化したデータ取得メソッドを提供します。
 
     Args:
-        host (str, optional): データベースホスト。デフォルトは設定ファイルから取得。
-        port (str, optional): データベース接続ポート。デフォルトは設定ファイルから取得。
-        db_name (str, optional): データベース名。デフォルトは設定ファイルから取得。
-        username (str, optional): データベース接続ユーザー名。デフォルトは設定ファイルから取得。
-        password (str, optional): データベース接続パスワード。デフォルトは設定ファイルから取得。
+        host (str): データベースホスト。
+        port (str): データベース接続ポート。
+        db_name (str): データベース名。
+        username (str): データベース接続ユーザー名。
+        password (str): データベース接続パスワード。
         sql_dir (str, optional): SQLクエリファイルが格納されているディレクトリパス。
+            相対パスの場合は呼び出し元のディレクトリからの相対パス、
+            絶対パスの場合はそのパスをそのまま使用します。
+            デフォルトは 'sql' です。
 
     Attributes:
         connection_string (str): データベース接続文字列。
 
     Examples:
         # デフォルト設定でデータベースに接続
-        >>> db = Postgresql()
+        >>> db = Postgresql(
+        ...     host='localhost',
+        ...     port='5432',
+        ...     db_name='mydb',
+        ...     username='user',
+        ...     password='pass'
+        ... )
         >>> db.list_tables()
 
-        # カスタム接続情報でデータベースに接続
+        # カスタムSQLディレクトリを指定してデータベースに接続
         >>> custom_db = Postgresql(
         ...     host='custom.host.com',
         ...     port='5433',
         ...     db_name='custom_db',
         ...     username='custom_user',
-        ...     password='custom_pass'
+        ...     password='custom_pass',
+        ...     sql_dir='/absolute/path/to/sql/files'
         ... )
     """
 
@@ -52,7 +62,7 @@ class Postgresql(Database):
         db_name: str,
         username: str,
         password: str,
-        sql_dir: str | None = None,
+        sql_dir: str = "sql",
     ):
         """
         データベースへの接続を初期化する。
@@ -61,12 +71,15 @@ class Postgresql(Database):
         親クラスのコンストラクタを呼び出します。接続を自動的に確立します。
 
         Args:
-            host (str, optional): データベースホスト。
-            port (str, optional): データベース接続ポート。
-            db_name (str, optional): データベース名。
-            username (str, optional): データベース接続ユーザー名。
-            password (str, optional): データベース接続パスワード。
+            host (str): データベースホスト。
+            port (str): データベース接続ポート。
+            db_name (str): データベース名。
+            username (str): データベース接続ユーザー名。
+            password (str): データベース接続パスワード。
             sql_dir (str, optional): SQLクエリファイルが格納されているディレクトリパス。
+                相対パスの場合は呼び出し元のディレクトリからの相対パス、
+                絶対パスの場合はそのパスをそのまま使用します。
+                デフォルトは 'sql' です。
         """
         self.logger = initialize()
         # 接続文字列を生成
@@ -88,4 +101,6 @@ class Postgresql(Database):
         Returns:
             str: オブジェクトの文字列表現。
         """
-        return f"PostgreSQL Database Connection: {self.connection_string}"
+        # engine情報からユーザー名とパスワードを含まない表示を生成
+        conn_info = str(self.engine.url)
+        return f"PostgreSQL Database Connection: {conn_info}"
