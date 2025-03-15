@@ -6,6 +6,7 @@
 また、Jinja2テンプレートを使用したSQLクエリ管理機能を含みます。
 """
 
+import inspect
 import os
 from typing import Any
 
@@ -52,9 +53,21 @@ class Database:
         self.logger = initialize()
         self.engine: Engine = sqlalchemy.create_engine(connection_string)
         self.connection = None
+        self.connection_string = connection_string
+
+        # 呼び出し元のモジュールを特定してプロジェクトルートを見つける
+        caller_frame = inspect.stack()[2]
+        caller_module = inspect.getmodule(caller_frame[0])
+
+        # 呼び出し元モジュールのディレクトリを取得（リポジトリルートの可能性が高い）
+        if caller_module and hasattr(caller_module, "__file__"):
+            # 呼び出し元ディレクトリをプロジェクトルートとして使用
+            project_root = os.path.dirname(os.path.abspath(caller_module.__file__))
+        else:
+            # フォールバック: カレントディレクトリを使用
+            project_root = os.getcwd()
 
         # SQLクエリファイルディレクトリを設定
-        project_root = os.path.dirname(os.path.abspath(__file__))
         self.sql_dir = os.path.join(project_root, sql_dir)
         self.logger.debug(f"SQLディレクトリ: {self.sql_dir}")
 
