@@ -4,7 +4,7 @@
 
 import os
 
-from zangetsu_data import Database
+from zangetsu_data.common_database import Database
 
 
 class BigQuery(Database):

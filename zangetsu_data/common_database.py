@@ -12,9 +12,9 @@ from typing import Any
 import jinja2
 import pandas as pd
 import sqlalchemy
-from zangetsu_logger import initialize
 from sqlalchemy import text
 from sqlalchemy.engine import Engine
+from zangetsu_logger import initialize
 
 
 class Database:
