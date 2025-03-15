@@ -6,8 +6,9 @@
 また、SQLクエリをファイルとして管理し、Jinja2テンプレートエンジンを活用します。
 """
 
-from .common_database import Database
 from zangetsu_logger import initialize
+
+from .common_database import Database
 
 
 class Postgresql(Database):

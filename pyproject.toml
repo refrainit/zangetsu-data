@@ -68,3 +68,7 @@ filterwarnings = [
 # カバレッジ設定（カバレッジツールを使用する場合）
 # requires pytest-cov
 # addopts = "--cov=. --cov-report=html"
+
+[build-system]
+requires = ["setuptools>=42.0", "wheel"]
+build-backend = "setuptools.build_meta"
