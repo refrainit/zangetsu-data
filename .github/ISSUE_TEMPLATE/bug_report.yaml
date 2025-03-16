@@ -1,45 +1,73 @@
 name: バグ報告
-description: バグ報告用のテンプレート
+description: バグを報告して改善にご協力ください
+title: "[バグ]: "
+labels: ["bug"]
+assignees: []
 body:
-  - type: textarea
+  - type: markdown
     attributes:
-      label: バグの概要
-      description: バグの内容を簡潔に記入してください。
+      value: |
+        ## バグ報告フォーム
+        バグ報告にご協力いただきありがとうございます！
+        できるだけ詳細な情報を提供いただくことで、迅速な問題解決につながります。
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: バグの説明
+      description: バグの内容を明確かつ簡潔に説明してください。
+      placeholder: 何が起きているか、どのような問題があるかを書いてください。
     validations:
       required: true
+
   - type: textarea
+    id: reproduction
     attributes:
       label: 再現手順
       description: バグを再現するための手順を記入してください。
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: 期待される動作
-      description: 正常時に期待される動作を記入してください。
+      placeholder: |
+        1. '...' に移動
+        2. '...' をクリック
+        3. エラーが表示される
     validations:
       required: false
-  - type: textarea
+      
+  - type: checkboxes
+    id: environment
     attributes:
-      label: 実際の動作
-      description: 実際に発生している動作を記入してください。
+      label: 発生環境
+      description: バグが発生した環境を選択してください（複数選択可）
+      options:
+        - label: Windows
+        - label: macOS
+        - label: Linux
+        - label: iOS/iPadOS
+        - label: Android
+        - label: Chrome
+        - label: Firefox
+        - label: Safari
+        - label: Edge
+        - label: その他（下の追加情報に記載）
     validations:
       required: false
-  - type: textarea
+
+  - type: dropdown
+    id: severity
     attributes:
-      label: スクリーンショット
-      description: 必要に応じてスクリーンショットを添付してください。
+      label: 深刻度
+      description: このバグの影響度はどの程度ですか？
+      options:
+        - 致命的（システムが全く使用できない）
+        - 高（主要機能が使用できない）
+        - 中（一部機能に問題あり）
+        - 低（軽微な問題）
     validations:
       required: false
+      
   - type: textarea
+    id: additional
     attributes:
-      label: 環境
-      description: 発生した環境（OS、ブラウザ、バージョンなど）を記入してください。
+      label: 追加情報
+      description: スクリーンショット、エラーメッセージ、環境詳細などの追加情報
     validations:
       required: false
-  - type: textarea
-    attributes:
-      label: その他の情報
-      description: その他に関連する情報があれば記入してください。
-    validations:
-      required: false       

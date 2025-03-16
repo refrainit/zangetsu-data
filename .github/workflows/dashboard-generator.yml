@@ -1,0 +1,33 @@
+name: Issue Dashboard Generator
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # 6時間ごとに更新
+  workflow_dispatch:        # 手動実行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install @octokit/rest chart.js
+
+      - name: Generate dashboard data
+        run: node .github/scripts/generate-dashboard-data.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dashboard
+          publish_branch: gh-pages

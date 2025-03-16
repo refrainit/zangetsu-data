@@ -1,27 +1,95 @@
 name: タスク
-description: タスク用のテンプレート
+description: プロジェクトのタスクを作成する
+title: "[タスク]: "
+labels: ["task"]
+assignees: []
 body:
-  - type: textarea
+  - type: markdown
     attributes:
-      label: タスクの概要
-      description: タスクの内容を簡潔に記入してください。
+      value: |
+        ## タスク作成フォーム
+        タスクの詳細を入力してください。明確な説明があるとチームの協働が円滑になります。
+        実装を伴う機能のリクエストや、バグの報告は別のテンプレートをご利用ください。
+        本テンプレートはプログラムの実装や修正を伴わないタスクの作成にご利用ください。
+
+  - type: input
+    id: task-title
+    attributes:
+      label: タスク概要
+      description: タスクを一言で説明してください
+      placeholder: "ドキュメント更新"
     validations:
       required: true
-  - type: textarea
+      
+  - type: dropdown
+    id: task-category
     attributes:
-      label: 目的
-      description: タスクの目的を記入してください。
+      label: カテゴリ
+      description: タスクの種類を選択してください
+      options:
+        - 管理業務
+        - ドキュメント作成/更新
+        - レビュー
+        - 調査/リサーチ
+        - 会議/ミーティング
+        - テスト/QA
+        - その他
     validations:
       required: true
-  - type: textarea
+
+  - type: dropdown
+    id: task-priority
     attributes:
-      label: 作業内容
-      description: タスクの作業内容を記入してください。
+      label: 優先度
+      description: このタスクの優先度を選択してください
+      options:
+        - 高（緊急）
+        - 中（通常）
+        - 低（余裕があれば）
+    validations:
+      required: false
+
+  - type: dropdown
+    id: task-size
+    attributes:
+      label: 作業量
+      description: このタスクの作業量を選択してください
+      options:
+        - 小（1時間以内）
+        - 中（半日程度）
+        - 大（1日以上）
+    validations:
+      required: false
+
+  - type: textarea
+    id: task-details
+    attributes:
+      label: 詳細内容
+      description: タスクの詳細と完了条件を記入してください
+      placeholder: |
+        - 実施内容：
+        - 完了条件：
     validations:
       required: true
-  - type: textarea
+
+  - type: input
+    id: task-related
     attributes:
-      label: その他の情報
-      description: その他に関連する情報があれば記入してください。
+      label: 関連Issue
+      description: 関連するIssueがあれば番号を記入
+      placeholder: "#123"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: task-flags
+    attributes:
+      label: フラグ
+      description: 該当する項目をチェックしてください
+      options:
+        - label: サポートが必要
+        - label: レビューが必要
+        - label: ブロッカーあり
+        - label: 急ぎ対応
     validations:
       required: false
