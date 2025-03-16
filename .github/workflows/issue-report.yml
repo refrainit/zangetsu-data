@@ -1,0 +1,31 @@
+name: Issue Report Generator
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # 毎週月曜日に実行
+  workflow_dispatch:     # 手動実行も可能
+
+jobs:
+  generate_report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Generate Issue Report
+        run: |
+          pip install PyGithub pandas matplotlib
+          python .github/scripts/generate_issue_report.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: issue-report
+          path: issue-report.md

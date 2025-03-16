@@ -1,33 +1,56 @@
-name: 要望等
-description: 要望用のテンプレート
+name: 機能リクエスト
+description: このプロジェクトのアイデアを提案する
+title: "[機能]: "
+labels: ["enhancement"]
+assignees: []
 body:
-  - type: textarea
+  - type: markdown
     attributes:
-      label: 要望の概要
-      description: 要望の内容を簡潔に記入してください。
+      value: |
+        ## 機能リクエストフォーム
+        新機能の提案にご協力いただきありがとうございます！
+        どのような機能が必要か、なぜその機能が重要なのかを教えてください。
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: 機能の説明
+      description: どのような機能が欲しいか簡潔に説明してください。
+      placeholder: この機能で実現したいことは何ですか？
     validations:
       required: true
-  - type: textarea
+
+  - type: dropdown
+    id: motivation
     attributes:
-      label: 背景
-      description: 要望の背景を記入してください。
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: 目的
-      description: 要望の目的を記入してください。
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: 提案
-      description: 要望の提案を記入してください。
+      label: モチベーション
+      description: この機能が必要な主な理由は？
+      options:
+        - 生産性向上
+        - ユーザー体験の改善
+        - バグや不便の解消
+        - 新しい機能の追加
+        - その他（下の追加情報に記載）
     validations:
       required: false
-  - type: textarea
+
+  - type: checkboxes
+    id: considerations
     attributes:
-      label: その他の情報
-      description: その他に関連する情報があれば記入してください。
+      label: 検討事項
+      description: この機能について検討した内容をチェックしてください
+      options:
+        - label: 既存の機能では対応できないことを確認済み
+        - label: 実装の技術的な実現可能性を検討した
+        - label: 代替案も検討した
+        - label: ユーザーへの影響を考慮した
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 追加情報
+      description: 機能に関する補足情報、スクリーンショット、参考資料などがあれば追加してください。
     validations:
       required: false
